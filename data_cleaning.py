@@ -6,6 +6,7 @@ Created on Fri Nov 20 11:34:06 2020
 """
 
 import pandas as pd
+import numpy as np
 import datetime as dt
 import re
 
@@ -28,6 +29,9 @@ df.head()
 # Change 'release date' dtype
 df['Release Date'] = pd.to_datetime(df['Release Date'], format = '%m/%d/%Y').dt.date
 df.head()
+
+df['Days After Release'] = df['Order Date'] - df['Release Date']
+df['Days After Release'] = df['Days After Release'] / np.timedelta64(1, 'D')
 
 # Remove $ and comma from sale price
 df['Sale Price'] = df['Sale Price'].apply(lambda x: x.replace('$', '').replace(',', ''))
@@ -54,6 +58,4 @@ df['Sneaker Name'] = df['Sneaker Name'].apply(lambda x: x.replace('-', ' '))
 #     for i in range(len(colors)):
 #         df.at[index,"color"+str(i)] = colors[i]
         
-df.dtypes
-df.columns
-df.drop(df['Unnamed: 12'])
+df.to_csv('sneaker_data_cleaned.csv', index = False)
