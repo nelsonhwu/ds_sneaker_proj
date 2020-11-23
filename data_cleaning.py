@@ -22,11 +22,11 @@ nulls = pd.concat([df.isnull().sum()], axis=1)
 nulls[nulls.sum(axis=1) > 0]
 
 #Change 'order date' dtype
-df['Order Date'] = pd.to_datetime(df['Order Date'], format= '%m/%d/%y').dt.date
+df['Order Date'] = pd.to_datetime(df['Order Date'], format = '%m/%d/%Y').dt.date
 df.head()
 
 # Change 'release date' dtype
-df['Release Date'] = pd.to_datetime(df['Release Date'], format = '%m/%d/%y').dt.date
+df['Release Date'] = pd.to_datetime(df['Release Date'], format = '%m/%d/%Y').dt.date
 df.head()
 
 # Remove $ and comma from sale price
@@ -43,10 +43,17 @@ for col in obj_cols:
 # Remove '-' from sneaker name
 df['Sneaker Name'] = df['Sneaker Name'].apply(lambda x: x.replace('-', ' '))
 
-# Isolate Colors
-shoe_name = df['Sneaker Name']
+# Attempt to run through for loop to isolate colors
+# # Isolate Colors
+# shoe_name = df['Sneaker Name']
+# shoe_obj = enumerate(shoe_name)
 
-colors = re.findall( r'Black|White|Red|Orange|Yellow|Green|Blue|Purple', pd.Series.to_string(shoe_name))
-print(pd.Series.to_string(shoe_name))
-print(shoe_name)
-print(colors)
+# for index,shoe in shoe_obj:
+#     colors = []
+#     colors = re.findall( r'Black|White|Red|Orange|Yellow|Green|Blue|Purple', shoe)
+#     for i in range(len(colors)):
+#         df.at[index,"color"+str(i)] = colors[i]
+        
+df.dtypes
+df.columns
+df.drop(df['Unnamed: 12'])
